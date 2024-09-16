@@ -45,6 +45,8 @@ Although `redis` is simpler and more lightweight, it does not (easily) provide p
 - `docker-compose.yml` - service images used in the project;
 - `pyproject.toml` - python requirements for the app;
 - `.env` - environment variables for **test task purposes only** it's in github project folder;
+- `data/` - for services data(will appear after first run);
+- `data/worker_data/` - for mock emails when will change tasks status
 - `app/` - application folder;
 - `app/docker/Dockerfile` - to build the app image;
 - `app/exceptions.py` - custom exceptions;
@@ -58,5 +60,8 @@ Although `redis` is simpler and more lightweight, it does not (easily) provide p
 
 ## How to run
 
-
+- `git clone https://github.com/BezuglyR/TaskTracker.git`
+- `cd TaskTracker`
+- `docker-compose up` - *docker must be installed on your system*
+- http://127.0.0.1:8000/docs - after all containers up and initialized
 
