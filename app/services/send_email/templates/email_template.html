@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Status Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            text-align: center;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <h1>Status of Task #{{id}} Was Changed to {{status}}</h1>
+        <p>Dear User,</p>
+        <p>The status of the task <strong>{{title}}</strong> has been updated to <strong>{{status}}</strong>.</p>
+        <p>This change was made on <strong>{{updated_at}}</strong>.</p>
+        <p>Best regards,<br>Your Task Management</p>
+    </div>
+    <div class="footer">
+        &copy; 2024 Task Management. All rights reserved ;).
+    </div>
+</body>
+</html>

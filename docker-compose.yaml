@@ -1,0 +1,79 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    container_name: postgres_container
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - tracker
+
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    networks:
+      - tracker
+
+  worker:
+    container_name: worker_container
+    build:
+      context: .
+      dockerfile: ./app/docker/Dockerfile
+    command: celery -A app.services.celery_app worker --loglevel=info
+    volumes:
+      - ./data/worker_data:/app/app/services/send_email/mock_mail
+    environment:
+      - CELERY_BROKER_URL=redis://redis:${REDIS_PORT}/0
+      - CELERY_RESULT_BACKEND=redis://redis:${REDIS_PORT}/0
+    networks:
+      - tracker
+    depends_on:
+      - redis
+
+#  app:
+#    container_name: app_container
+#    build:
+#      context: .
+#      dockerfile: ./app/docker/Dockerfile
+#    ports:
+#      - "8000:8000"
+#    command: >
+#      bash -c "./wait-for-it.sh ${POSTGRES_HOST}:${POSTGRES_PORT} --timeout=60 --strict &&
+#               poetry run alembic upgrade head &&
+#               uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+#    networks:
+#      - tracker
+#    depends_on:
+#      - postgres
+#      - worker
+
+networks:
+  tracker:
+    driver: bridge
