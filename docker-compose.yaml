@@ -57,22 +57,22 @@ services:
     depends_on:
       - redis
 
-#  app:
-#    container_name: app_container
-#    build:
-#      context: .
-#      dockerfile: ./app/docker/Dockerfile
-#    ports:
-#      - "8000:8000"
-#    command: >
-#      bash -c "./wait-for-it.sh ${POSTGRES_HOST}:${POSTGRES_PORT} --timeout=60 --strict &&
-#               poetry run alembic upgrade head &&
-#               uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
-#    networks:
-#      - tracker
-#    depends_on:
-#      - postgres
-#      - worker
+  app:
+    container_name: app_container
+    build:
+      context: .
+      dockerfile: ./app/docker/Dockerfile
+    ports:
+      - "8000:8000"
+    command: >
+      bash -c "./wait-for-it.sh ${POSTGRES_HOST}:${POSTGRES_PORT} --timeout=60 --strict &&
+               poetry run alembic upgrade head &&
+               uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    networks:
+      - tracker
+    depends_on:
+      - postgres
+      - worker
 
 networks:
   tracker:
