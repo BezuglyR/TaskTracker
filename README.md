@@ -28,9 +28,15 @@ Although `redis` is simpler and more lightweight, it does not (easily) provide p
 
 
 
+### Monitoring tasks - Flower
+
+Flower is an open-source web application for monitoring and managing [Celery](https://docs.celeryq.dev/en/stable/#) clusters. It provides real-time information about the status of Celery workers and tasks.
+
+
+
 ### Service orchestration - Docker-compose
 
-`docker-compose` is an obvious choice to orchestrate several heterogeneous services and make them interoperate in an ensebmle, regardless of the environment.
+`docker-compose` is an obvious choice to orchestrate several heterogeneous services and make them interoperate in an ensemble, regardless of the environment.
 
 
 
