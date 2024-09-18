@@ -24,11 +24,11 @@ from app.users.models import Users
 
 router = APIRouter(
     prefix="/tasks",
-    tags=["Tasks"]
+    #tags=["Tasks"]
 )
 
 
-@router.get("", response_model=List[STasksResponse])
+@router.get("", response_model=List[STasksResponse], tags=["Tasks Read"])
 async def get_tasks(
     user: Users = Depends(get_current_user)
 ):
@@ -51,7 +51,7 @@ async def get_tasks(
     return tasks_list
 
 
-@router.get("/{task_id}", response_model=STasksResponse)
+@router.get("/{task_id}", response_model=STasksResponse, tags=["Tasks Read"])
 async def get_task(
     task_id: int,
     user: Users = Depends(get_current_user)
@@ -72,7 +72,7 @@ async def get_task(
     return result
 
 
-@router.post("", response_model=STasksResponse)
+@router.post("", response_model=STasksResponse, tags=["Tasks Create"])
 async def create_task(
     task_data: Annotated[STasksCreate, Form()],
     user: Users = Depends(get_current_pm_user)
@@ -96,7 +96,7 @@ async def create_task(
     return result
 
 
-@router.put("/{task_id}", response_model=STasksResponse)
+@router.put("/{task_id}", response_model=STasksResponse, tags=["Tasks Update"])
 async def update_task(
     task_id: int,
     task_update_schema: Annotated[STasksUpdate, Form()],
@@ -126,7 +126,7 @@ async def update_task(
     return result
 
 
-@router.put("/{task_id}/status", response_model=STasksResponse)
+@router.put("/{task_id}/status", response_model=STasksResponse, tags=["Tasks Update"])
 async def update_status_task(
     task_id: int,
     task_status_schema: Annotated[STasksStatusUpdate, Form()],
@@ -156,7 +156,7 @@ async def update_status_task(
     return result
 
 
-@router.delete("/{task_id}")
+@router.delete("/{task_id}", tags=["Tasks Delete"])
 async def delete_task(
     task_id: int,
     user: Users = Depends(get_current_pm_user)
