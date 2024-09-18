@@ -40,7 +40,7 @@
 <body>
     <div class="email-container">
         <h1>Status of Task #{{id}} Was Changed to {{status}}</h1>
-        <p>Dear User,</p>
+        <p>Dear {{responsible_user.name}},</p>
         <p>The status of the task <strong>{{title}}</strong> has been updated to <strong>{{status}}</strong>.</p>
         <p>This change was made on <strong>{{updated_at}}</strong>.</p>
         <p>Best regards,<br>Your Task Management</p>

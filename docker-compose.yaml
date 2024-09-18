@@ -26,16 +26,6 @@ services:
     container_name: redis_container
     ports:
       - "6379:6379"
-    volumes:
-      - ./data/redis_data:/data
-    healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    restart: unless-stopped
-    tty: true
-    stdin_open: true
     networks:
       - tracker
 
@@ -71,6 +61,21 @@ services:
     depends_on:
       - postgres
       - worker
+
+  flower:
+    container_name: flower_container
+    build:
+      context: .
+      dockerfile: ./app/docker/Dockerfile
+    command: celery -A app.services.celery_app:celery flower
+    ports:
+      - 5555:5555
+    networks:
+      - tracker
+    depends_on:
+      - worker
+      - redis
+
 
 networks:
   tracker:

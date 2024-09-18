@@ -66,7 +66,7 @@ async def get_task(
     Returns:
         STasksResponse: The details of the task.
     """
-    task = await TasksDAO.find_task_by_id_join_performers(task_id)
+    task: Tasks = await TasksDAO.find_task_by_id_join_performers(task_id)
     task.responsible_user = await UsersDAO.find_by_id(task.responsible_user_id)
     result = parse_obj_as(STasksResponse, task)
     return result
@@ -87,7 +87,7 @@ async def create_task(
     Returns:
         STasksResponse: The created task.
     """
-    new_task = await TasksDAO.add_task_and_performers(**task_data.dict())
+    new_task: Tasks = await TasksDAO.add_task_and_performers(**task_data.dict())
 
     result = await add_responsible_and_performers_users_models_in_task_response(
         task=new_task,
@@ -113,8 +113,8 @@ async def update_task(
     Returns:
         STasksResponse: The updated task.
     """
-    task = await TasksDAO.find_by_id(task_id)
-    updated_task = await TasksDAO.update_task_and_performers(task_id, **task_update_schema.dict())
+    task: Tasks = await TasksDAO.find_by_id(task_id)
+    updated_task: Tasks = await TasksDAO.update_task_and_performers(task_id, **task_update_schema.dict())
 
     result = await add_responsible_and_performers_users_models_in_task_response(
         task=updated_task
@@ -143,8 +143,8 @@ async def update_status_task(
     Returns:
         STasksResponse: The task with updated status.
     """
-    task = await TasksDAO.find_by_id(task_id)
-    updated_task = await TasksDAO.update_task_and_performers(task_id, **task_status_schema.dict())
+    task: Tasks = await TasksDAO.find_by_id(task_id)
+    updated_task: Tasks = await TasksDAO.update_task_and_performers(task_id, **task_status_schema.dict())
 
     result = await add_responsible_and_performers_users_models_in_task_response(
         task=updated_task
