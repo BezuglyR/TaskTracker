@@ -1,0 +1,36 @@
+steps:
+  # Step 1: Build Docker image
+  - name: gcp.io/cloud-builders/docker
+    id: build
+    args: ['build', '-t', '$_SERVICE_IMAGE', '.', '-f', 'Dockerfile']
+
+  # Step 2: Push Docker image to Google Container Registry (GCR)
+  - name: gcp.io/cloud-builders/docker
+    id: push
+    args: ['push', '$_SERVICE_IMAGE']
+
+  # Step 3: Deploy to Cloud Run
+  - name: gcr.io/cloud-builders/gcloud
+    id: deploy
+    args:
+      - run
+      - services
+      - update
+      - $_SERVICE_IMAGE
+      - --project=$_SERVICE_PROJECT
+      - --region=$_SERVICE_REGION
+      - --image=$_SERVICE_IMAGE
+
+images:
+  - $_SERVICE_IMAGE
+
+# Timeout for the build process
+timeout: 1200s
+
+substitutions:
+  _SERVICE_IMAGE: ${_SERVICE_REGISTRY}-decker.pkg.dev/${PROJECT_ID}/${_DOCKER_REGISTRY}/${_DOCKER_IMAGENAME}:${SHORT_SHA}
+  _SERVICE_PROJECT: Production
+  _SERVICE_REGION: europe-west3
+  _SERVICE_NAME: docker-app-production
+  _DOCKER_REGISTRY: rmk-docker-repo
+  _DOCKER_IMAGENAME: myapp_prod
