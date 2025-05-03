@@ -32,8 +32,8 @@ options:
 
 substitutions:
   _SERVICE_IMAGE: ${_SERVICE_REGISTRY}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_REGISTRY}/${_DOCKER_IMAGENAME}:${SHORT_SHA}
-  _SERVICE_PROJECT: Production
+  _SERVICE_PROJECT: my-production
   _SERVICE_REGION: europe-west3
   _SERVICE_NAME: docker-app-production
-  _DOCKER_REGISTRY: rmk-docker-repo
+  _DOCKER_REGISTRY: my-docker-repo
   _DOCKER_IMAGENAME: myapp_prod
