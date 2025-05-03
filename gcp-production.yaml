@@ -27,6 +27,9 @@ images:
 # Timeout for the build process
 timeout: 1200s
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 substitutions:
   _SERVICE_IMAGE: ${_SERVICE_REGISTRY}-decker.pkg.dev/${PROJECT_ID}/${_DOCKER_REGISTRY}/${_DOCKER_IMAGENAME}:${SHORT_SHA}
   _SERVICE_PROJECT: Production
