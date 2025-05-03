@@ -29,8 +29,8 @@ timeout: 1200s
 
 substitutions:
   _SERVICE_IMAGE: ${_SERVICE_REGISTRY}-decker.pkg.dev/${PROJECT_ID}/${_DOCKER_REGISTRY}/${_DOCKER_IMAGENAME}:${SHORT_SHA}
-  _SERVICE_PROJECT: Production
+  _SERVICE_PROJECT: Staging
   _SERVICE_REGION: europe-west3
-  _SERVICE_NAME: docker-app-production
+  _SERVICE_NAME: docker-app-staging
   _DOCKER_REGISTRY: rmk-docker-repo
-  _DOCKER_IMAGENAME: myapp_prod
+  _DOCKER_IMAGENAME: myapp_stage
