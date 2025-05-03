@@ -31,7 +31,7 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 substitutions:
-  _SERVICE_IMAGE: ${_SERVICE_REGISTRY}-decker.pkg.dev/${PROJECT_ID}/${_DOCKER_REGISTRY}/${_DOCKER_IMAGENAME}:${SHORT_SHA}
+  _SERVICE_IMAGE: ${_SERVICE_REGISTRY}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_REGISTRY}/${_DOCKER_IMAGENAME}:${SHORT_SHA}
   _SERVICE_PROJECT: Production
   _SERVICE_REGION: europe-west3
   _SERVICE_NAME: docker-app-production
