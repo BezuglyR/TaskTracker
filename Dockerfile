@@ -1,4 +1,4 @@
-FROM python:3.11-buster
+FROM python:3.13.3-slim
 
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONUNBUFFERED=1 \
@@ -18,7 +18,7 @@ RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
 # Creating folders, and files for a project:
-COPY .. /app/
+COPY app/ .
 
 # Add wait-for-it script
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /app/wait-for-it.sh

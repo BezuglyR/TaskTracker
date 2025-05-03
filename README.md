@@ -48,13 +48,13 @@ Flower is an open-source web application for monitoring and managing [Celery](ht
 
 ## Code organization
 
+- `Dockerfile` - to build the app image;
 - `docker-compose.yml` - service images used in the project;
 - `pyproject.toml` - python requirements for the app;
 - `.env` - environment variables for **test task purposes only** it's in github project folder;
 - `data/` - for services data(will appear after first run);
 - `data/worker_data/` - for mock emails when will change tasks status
 - `app/` - application folder;
-- `app/docker/Dockerfile` - to build the app image;
 - `app/exceptions.py` - custom exceptions;
 - `app/config.py` - config for project, default DEBUG=True to mock email send;
 - `app/database.py` - database settings;
