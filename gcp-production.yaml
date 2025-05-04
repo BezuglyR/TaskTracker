@@ -2,6 +2,8 @@ steps:
   # Step 1: Build Docker image
   - name: gcr.io/cloud-builders/docker
     id: build
+    env:
+      - 'DOCKER_BUILDKIT=1'
     args: ['build', '-t', '$_SERVICE_IMAGE', '.', '-f', 'Dockerfile']
 
   # Step 2: Push Docker image to Google Container Registry (GCR)

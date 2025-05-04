@@ -37,7 +37,7 @@ RUN useradd -r -d /tasktracker -g tasktracker -N tasktracker
 STOPSIGNAL SIGINT
 
 # Clean up unnecessary files to reduce image size
-RUN apt-get clean  # Clean up apt cache
+RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Copy the built application from the build stage
