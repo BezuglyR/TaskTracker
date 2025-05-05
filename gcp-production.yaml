@@ -18,7 +18,7 @@ steps:
       - run
       - services
       - update
-      - $_SERVICE_IMAGE
+      - $_SERVICE_NAME
       - --project=$_SERVICE_PROJECT
       - --region=$_SERVICE_REGION
       - --image=$_SERVICE_IMAGE
