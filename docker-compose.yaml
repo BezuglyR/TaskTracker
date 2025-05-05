@@ -2,7 +2,7 @@ services:
 
   postgres:
     container_name: postgres_container
-    image: postgres:13.3
+    image: postgres:16
     environment:
       POSTGRES_DB: "${POSTGRES_DB}"
       POSTGRES_USER: "${POSTGRES_USER}"
@@ -33,7 +33,7 @@ services:
     container_name: worker_container
     build:
       context: .
-      dockerfile: ./app/docker/Dockerfile
+      dockerfile: ./Dockerfile
     command: celery -A app.services.celery_app worker --loglevel=info
     volumes:
       - ./data/worker_data:/app/app/services/send_email/mock_mail
@@ -49,13 +49,20 @@ services:
     container_name: app_container
     build:
       context: .
-      dockerfile: ./app/docker/Dockerfile
+      dockerfile: ./Dockerfile
     ports:
       - "8000:8000"
-    command: >
-      bash -c "./wait-for-it.sh ${POSTGRES_HOST}:${POSTGRES_PORT} --timeout=60 --strict &&
-               poetry run alembic upgrade head &&
-               uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - .venv/
+
+        # Rebuild the image on changes to the `pyproject.toml`
+        - action: rebuild
+          path: ./pyproject.toml
     networks:
       - tracker
     depends_on:
@@ -66,7 +73,7 @@ services:
     container_name: flower_container
     build:
       context: .
-      dockerfile: ./app/docker/Dockerfile
+      dockerfile: ./Dockerfile
     command: celery -A app.services.celery_app:celery flower
     ports:
       - 5555:5555
